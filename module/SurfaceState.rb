@@ -9,6 +9,6 @@ module SurfaceState
 
   def_delegators :keys, :values
 
-  @contents = ["芝", "ダ"]
-  
+  @contents = ["芝", "ダート"]
+
 end

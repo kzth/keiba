@@ -27,22 +27,38 @@ when ARGV[0] == 'collecturl'
     break if day > today
   }
 
-  #RaceListScraper.scrape
 when ARGV[0] == 'downloadpage'
-when ARGV[0] == 'scrapehtml'
 
+  # レースページのhtmlをdownloadする
   File.open(RACE_LIST_FILE, 'r') do |f|
     f.each_line do |line|
+      date = line.to_s.match /[0-9]{12}/
+      puts date
       race_url = NETKEIBA_DB_URL + line.to_s
 
+      RaceScraper.downloadpage race_url, date
     end
+  end
+
+when ARGV[0] == 'scrapehtml'
+
+  # DLしたhtmlをスクレイプしてDBに格納する
+  dir_name = "./html"
+  dir = Dir.open(dir_name)
+  dir.each do|file|
+    next if file.match /^\./
+
+    html = File.open(dir_name + '/' + file).read
+
+    RaceScraper.scrape html
 
   end
+
+
 
 when ARGV[0] == 'extract'
 when ARGV[0] == 'genfeature'
 when ARGV[0] == 'test'
-  RaceScraper.scrape "http://yahoo.co.jp"
 else
   puts 'error'
 end

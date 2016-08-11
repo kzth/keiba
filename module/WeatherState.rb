@@ -13,5 +13,5 @@ module WeatherState
   def_delegators :keys, :values, :value
 
   @contents = ['晴', '曇', '雨', '小雨', '雪']
-  
+
 end
