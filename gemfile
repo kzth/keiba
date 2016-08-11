@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'tbpgr_utils'
+gem 'nokogiri'
+gem 'activerecord'
+gem 'sqlite3'
