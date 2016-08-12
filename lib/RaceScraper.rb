@@ -19,18 +19,6 @@ class RaceScraper
     charset = 'EUC-JP'
     doc = Nokogiri::HTML.parse(html, nil, charset)
 
-      puts RaceScraper.new.send(:get_race_name, doc)
-      puts RaceScraper.new.send(:get_surface, doc)
-      puts RaceScraper.new.send(:get_distance, doc)
-      puts RaceScraper.new.send(:get_weather, doc)
-      puts RaceScraper.new.send(:get_surface_state, doc)
-      puts RaceScraper.new.send(:get_race_start, doc)
-      puts RaceScraper.new.send(:get_race_number, doc)
-      puts RaceScraper.new.send(:get_surface_score, doc)
-      puts RaceScraper.new.send(:get_date, doc)
-      puts RaceScraper.new.send(:get_place_detail, doc)
-      puts RaceScraper.new.send(:get_race_class, doc)
-
     RaceInfo.create(
       race_name: RaceScraper.new.send(:get_race_name, doc),
       surface: RaceScraper.new.send(:get_surface, doc),
@@ -66,31 +54,31 @@ class RaceScraper
   def get_surface doc
     info = doc.css('.racedata p').text.strip
     sur = info.split('/')[0]
-    sur.match(/芝右|ダ右|障芝|芝右 外|障芝 ダート|ダ左|芝左|障芝 外|芝左 外|芝直線|障芝 外-内|障芝 内-外|芝右 内2周/)
+    sur.match(/芝右|ダ右|障芝|芝右 外|障芝 ダート|ダ左|芝左|障芝 外|芝左 外|芝直線|障芝 外-内|障芝 内-外|芝右 内2周/)[0].to_s
   end
 
   def get_distance doc
     info = doc.css('.racedata p').text.strip
     num = info.split('/')[0]
-    num.match(/[0-9]+/)
+    num.match(/[0-9]+/)[0].to_i
   end
 
   def get_weather doc
     info = doc.css('.racedata p').text.strip
     tmp = info.split('/')[1]
-    tmp.match(/晴|曇|雨|小雨|雪/)
+    tmp.match(/晴|曇|雨|小雨|雪/)[0].to_s
   end
 
   def get_surface_state doc
     info = doc.css('.racedata p').text.strip
     sur = info.split('/')[2]
-    sur.match(/芝|ダート/)
+    sur.match(/芝|ダート/)[0].to_s
   end
 
   def get_race_start doc
     info = doc.css('.racedata p').text.strip
     tmp = info.split('/')[3]
-    tmp.match(/[0-9]{2}:[0-9]{2}/)
+    tmp.match(/[0-9]{2}:[0-9]{2}/)[0].to_i
   end
 
   def get_race_number doc
