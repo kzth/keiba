@@ -7,9 +7,9 @@ module Ticket
   TA = 0
   FU = 1
   WA = 2
-  RE = 3
+  URE = 3
   WAI = 4
-  TA = 5
+  UTA = 5
   SANTAN = 6
   SANREN = 7
 

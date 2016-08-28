@@ -12,4 +12,8 @@ module Enum
   def value num
     @contents[num]
   end
+
+  def type str
+    @contents.find_index str
+  end
 end

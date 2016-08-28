@@ -1,5 +1,5 @@
 create table race_infos(
-  id integer primary key auto_increment,
+  id integer primary key autoincrement,
   race_name     text    not null,
   surface       text    not null,
   distance      integer not null,

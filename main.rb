@@ -10,7 +10,7 @@ case
 when ARGV[0] == 'collecturl'
 
   # 10年分のレース結果リストを取得する
-  day = Date.new(2016, 6, 1)
+  day = Date.new(2007, 1, 1)
   today = Date.today
   loop {
     race_list = []
@@ -34,7 +34,7 @@ when ARGV[0] == 'downloadpage'
     f.each_line do |line|
       date = line.to_s.match /[0-9]{12}/
       puts date
-      race_url = NETKEIBA_DB_URL + line.to_s
+      race_url = NETKEIBA_DB_URL + line.to_s.strip
 
       RaceScraper.downloadpage race_url, date
     end
@@ -45,20 +45,21 @@ when ARGV[0] == 'scrapehtml'
   # DLしたhtmlをスクレイプしてDBに格納する
   dir_name = "./html"
   dir = Dir.open(dir_name)
-  dir.each do|file|
+  dir.each do |file|
     next if file.match /^\./
+    next if file.match /^200808020398/
+    next if file.match /^200808020399/
 
     html = File.open(dir_name + '/' + file).read
 
-    RaceScraper.scrape html
+    id = file.match(/[0-9]{12}/).to_s.to_i
+
+    RaceScraper.scrape html, id
 
   end
 
-
-
 when ARGV[0] == 'extract'
 when ARGV[0] == 'genfeature'
-when ARGV[0] == 'test'
 else
   puts 'error'
 end
